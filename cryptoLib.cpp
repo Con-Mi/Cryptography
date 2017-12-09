@@ -4,6 +4,7 @@
 //   ./cryptoLib
 
 #include <stdio.h>
+#include <math.h>
 
 /**
  * Assigns to the array "result" the values "result[0] = gcd", "result[1] = s"
@@ -11,11 +12,64 @@
  * "b", and "gcd = a * s + b * t".
  **/
 void EEA(int a, int b, int result[]) {
-    // Note: as you can see in the test suite,
-    // your function should work for any (positive) value of a and b.
+	// Special case: a=b
+	if (a == b) {
+		result[0] = a;
+		result[1] = 1;
+		result[2] = 0;
+		return;
+	}
+	// Declare variables
+	int s, s1, s2, t, t1, t2;
     int gcd = -1;
-    int s = -1;
-    int t = -1;
+    int x = 0;
+	int x1 = 1;
+	int x2 = 0;
+    int y = 1;
+	int y1 = 0;
+	int y2 = 1;
+	int quotient, remainder;
+	// Swap such that a>b
+	if (b > a) {
+		a += b;
+		b = a - b;
+		a -= b;
+		// Set t and s variables
+		t = y;
+		t1 = y1;
+		t2 = y2;
+		s = x;
+		s1 = x1;
+		s2 = x2;
+	}
+	else {
+		t = x;
+		t1 = x1;
+		t2 = x2;
+		s = y;
+		s1 = y1;
+		s2 = y2;
+	}
+
+	while (b > 0) {
+		quotient = floor(a / b);
+		remainder = a - quotient*b;
+		// Update t1 and 
+		t = t2 - quotient*t1;
+		s = s2 - quotient*s1;
+		// Update a and b
+		a = b;
+		b = remainder;
+		// Update temporary variables
+		s2 = s1;
+		t2 = t1;
+		t1 = t;
+		s1 = s;
+	}
+	gcd = a;
+	s = s2;
+	t = t2;
+	// Store results
     result[0] = gcd;
     result[1] = s;
     result[2] = t;

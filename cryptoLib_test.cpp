@@ -119,9 +119,9 @@ void TestHashCP(){
 
 int main(){
     TestEEA();
-    TestEulerPhi();
-    TestModInv();
-    TestFermatPT();
-    TestHashCP();
+    //TestEulerPhi();
+    //TestModInv();
+    //TestFermatPT();
+    //TestHashCP();
     return 0;
 }
