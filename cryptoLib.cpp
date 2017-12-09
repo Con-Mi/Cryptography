@@ -87,12 +87,23 @@ int EulerPhi(int n){
  * Returns 0 if the modular inverse does not exist.
  **/
 int ModInv(int n, int m){
+	bool negativeCase = false;
+	if (n < 0) {
+		n = m - n;
+		negativeCase = true;
+	}
 	// Use extended euclidean algorithm
 	int tmpArray[3];
 	EEA(n,m,tmpArray);
+	// Check if inverse exists
 	int gcd = tmpArray[0];
-	if (gcd != 1) // If no inverse exsits
+	if (negativeCase)
+		tmpArray[1] = m - tmpArray[1];
+	if (gcd != 1)
 		return 0;
+	// Check for negative numbers
+	if (tmpArray[1] < 0)
+		return (m + tmpArray[1]);
 	return tmpArray[1];
 
 }
