@@ -78,8 +78,30 @@ void EEA(int a, int b, int result[]) {
 /**
  * Returns Euler's Totient for value "n".
  **/
+int gcd(int a, int b)
+{
+	int q, r;
+	do {
+		q = (a - (a%b))/b;
+		r = a%b;
+		a = b;
+		b = r;
+	} while (r != 0);
+	
+	return a;
+} 
+
 int EulerPhi(int n){
-    return -1;
+
+	int euler_Phi = 0;
+	for (int i = 1; i < n; ++i)
+	{
+		if (gcd(n, i) == 1)
+		{
+			++euler_Phi;
+		}
+	}
+	return euler_Phi;
 }
 
 /**
