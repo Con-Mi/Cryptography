@@ -135,7 +135,36 @@ int ModInv(int n, int m){
  * Witness. Tests values from 2 (inclusive) to "n/3" (exclusive).
  **/
 int FermatPT(int n){
-    return -1;
+
+	int smallest = 3;
+	int b = 1;
+	int ferm_idx = 0;
+		
+	for (int i = 2; i < n; ++i)
+	{
+		int a = 1;
+		// Modular exponentiation.
+		for (int j = 0; j < n-1; ++j)
+		{	
+			a = (i * b) % n;
+			b = a;
+		}	// End.
+		
+		if (a != 1)
+		{
+			if (i <= smallest)
+			{
+				smallest = i;
+				++ferm_idx;
+			}
+		}
+		
+	}
+	
+	if (ferm_idx == 0)
+		return 0;
+	else
+		return smallest;
 }
 
 /**

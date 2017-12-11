@@ -120,8 +120,8 @@ void TestHashCP(){
 int main(){
     TestEEA();
     TestEulerPhi();
-    //TestModInv();
-    //TestFermatPT();
+    TestModInv();
+    TestFermatPT();
     //TestHashCP();
     return 0;
 }
