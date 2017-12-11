@@ -136,32 +136,29 @@ int ModInv(int n, int m){
  **/
 int FermatPT(int n){
 
-	int smallest = 3;
+	int i = 2;
 	int b = 1;
-	int ferm_idx = 0;
-		
-	for (int i = 2; i < n; ++i)
-	{
-		int a = 1;
+	int smallest = 0;
+	
+	while (i < n - 1) {
 		// Modular exponentiation.
+		int a = 0;
 		for (int j = 0; j < n-1; ++j)
 		{	
 			a = (i * b) % n;
 			b = a;
 		}	// End.
-		
+	
 		if (a != 1)
 		{
-			if (i <= smallest)
-			{
-				smallest = i;
-				++ferm_idx;
-			}
+			smallest = i;
+			break;
 		}
-		
+		else	
+			++i;
 	}
 	
-	if (ferm_idx == 0)
+	if (smallest == 0)
 		return 0;
 	else
 		return smallest;
