@@ -172,8 +172,13 @@ int FermatPT(int n){
  **/
 double HashCP(double n_samples, double size){
 	
-	double prob = 0;
-	prob = 1.0 - exp( (-n_samples*(n_samples-1))/(2*size) );
+	double prob = 1.0;
+	double tmprVal = size - (n_samples-1.0);
+	for (int i = 0; i < n_samples; ++i)
+	{
+		prob *= tmprVal/size;
+		++tmprVal;
+	}
 	
-	return prob;
+	return 1 - prob;
 }

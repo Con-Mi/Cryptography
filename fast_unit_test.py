@@ -1,18 +1,19 @@
-# Fermat primality test
+# Calculating factorial with stirling approximation 
 
 import numpy as np
 import math
 
 H = 4096.0
 n = 100.0
+prob = 1.0
+tmpr_val = H - (n - 1)
 
-#print math.factorial(H)
-prob = 1 - math.exp(-(n*(n)) / (2*H))
+for i in range(int(n)):
 
-print "Calculated answer"
-print prob
+	prob *= tmpr_val/H
+	tmpr_val += 1.0
+	print tmpr_val
+	
+print 1-prob
 
-print "Real answer is"
-print  0.547481
 
-print n**2
