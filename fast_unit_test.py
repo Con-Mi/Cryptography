@@ -1,39 +1,18 @@
 # Fermat primality test
 
 import numpy as np
+import math
 
-n = 1105
-my_list_witnesses = []
-my_list_liars = []
-"""
-for i in range(2, n-1):
-	if i**(n-1) % n == 1:
-		my_list_liars.append(i)
-	else:
-		my_list_witnesses.append(i)
+H = 4096.0
+n = 100.0
 
-if len(my_list_witnesses) != 0:
-	print "Smallest Fermat witness of compositeness:"
-	print np.min(my_list_witnesses) 
-	print "Smallest Fermat Liars: "
-	print np.min(my_list_liars)
-else:
-	print("n = %d is a Prime number") %n
-"""
-b = 1
-c = 1100
-answer = 0
-idx = 0
+#print math.factorial(H)
+prob = 1 - math.exp(-(n*(n)) / (2*H))
 
-for i in range(0, n-1):
-	answer = (b*c)%n
-	b = answer	
-	idx += 1
-	print b, idx
+print "Calculated answer"
+print prob
 
-print "\n"
-print "Final answer of modular exponentiation"
-print answer 
+print "Real answer is"
+print  0.547481
 
-
-	
+print n**2

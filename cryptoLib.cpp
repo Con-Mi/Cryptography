@@ -171,5 +171,9 @@ int FermatPT(int n){
  * the hash function can produce.
  **/
 double HashCP(double n_samples, double size){
-    return -1;
+	
+	double prob = 0;
+	prob = 1.0 - exp( (-n_samples*(n_samples-1))/(2*size) );
+	
+	return prob;
 }

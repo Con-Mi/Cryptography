@@ -122,6 +122,6 @@ int main(){
     TestEulerPhi();
     TestModInv();
     TestFermatPT();
-    //TestHashCP();
+    TestHashCP();
     return 0;
 }
