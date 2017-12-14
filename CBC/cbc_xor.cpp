@@ -5,6 +5,7 @@
 #include <vector>
 
 unsigned int toInt(char c);
+void getKey(std::vector<unsigned char> *first_block, std::vector<unsigned char> *encrypted, std::vector<unsigned char> *key);
 
 /**
  * Recover the encrypted message, knowing the first block of plain text. The
@@ -18,6 +19,7 @@ std::string recoverMessage(
 	std::vector<unsigned char> result;
 	unsigned int a = toInt('a');
 	// Find key
+	//std::vector<unsigned char> key;
 	/*bool notDone = true;
 	int tmpCounter = 0;
 	unsigned char IV;
@@ -77,16 +79,8 @@ int main() {
   return 0;
 }
 
-void getKey(std::vector<unsigned char> *first_block,std::vector<unsigned char> *encrypted, std::vector<unsigned char> *key) {
-	std::vector<unsigned char> C0;
-	for (int i = 0; i < 12; i++) {
-		&c0.push_back(encrypted.at(i));
-	}
-
-}
-
-void xor12(std::vector<unsigned char> *a, std::vector<unsigned char> *b, std::vector<unsigned char> *c) {
-	for (int byte = 0; byte < 12; byte++) {
-		&c->push_back(&a.at(byte) ^ &b.at(byte));
-	}
+std::vector<unsigned char> xor12(std::vector<unsigned char> *a, std::vector<unsigned char> *b) {
+	std::vector<unsigned char> c;
+	c.push_back('h');
+	return c;
 }
