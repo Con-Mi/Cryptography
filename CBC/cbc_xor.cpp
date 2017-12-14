@@ -14,36 +14,30 @@ std::vector<unsigned char> xor12(std::vector<unsigned char> a, std::vector<unsig
  * long.
  **/
 std::string recoverMessage(std::vector<unsigned char> first_block, std::vector<unsigned char> encrypted) {
-	std::cout << "recoverMessage() \n";
 	std::vector<unsigned char> result;
-	// Find key
+	// Find the decryption key
 	std::vector<unsigned char> key;
 	std::vector<unsigned char> c1;
 	for (int i = 12; i < 24; i++)
 		c1.push_back(encrypted[i]);
-	std::cout << "C1 stored \n";
 	key = xor12(first_block, encrypted);
 	key = xor12(key, c1);
-	std::cout << "Key found \n";
+
+	// Start decrypting the cipher text
 	int nbrOfBlocks = encrypted.size()/12;
 	std::vector<unsigned char> prevC = encrypted;
-	std::vector<unsigned char> currentC;
-	std::cout << "Big loop start \n";
 	for (int i = 1; i < nbrOfBlocks; i++) {
+		std::vector<unsigned char> currentC;
 		// Compute the current C
 		for (int j = 0; j < 12; j++) 
-			currentC[j] = encrypted[i * 12 + j];
-		std::cout << "Currenct c computed \n";
+			currentC.push_back(encrypted[i * 12 + j]);
 		std::vector<unsigned char> M = xor12(prevC, currentC);
 		M = xor12(M, key);
-		std::cout << "M done \n";
 		// Add plain text
 		for (int k = 0; k < 12; k++)
 			result.push_back(M[k]);
 		// Update prevC
-		std::cout << "Message stored \n";
 		prevC = currentC;
-		std::cout << "Old c overrided \n";
 	}
 
   // Work on the arrays (vectors) of bytes (unsigned chars).
