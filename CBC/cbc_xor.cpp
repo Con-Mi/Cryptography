@@ -6,43 +6,46 @@
 
 unsigned int toInt(char c);
 void getKey(std::vector<unsigned char> *first_block, std::vector<unsigned char> *encrypted, std::vector<unsigned char> *key);
+std::vector<unsigned char> xor12(std::vector<unsigned char> a, std::vector<unsigned char> b);
 
 /**
  * Recover the encrypted message, knowing the first block of plain text. The
  * encrypted text is of the form IV | C0 | C1 | ... where each block is 12 bytes
  * long.
  **/
-std::string recoverMessage(
-    std::vector<unsigned char> first_block,
-    std::vector<unsigned char> encrypted) {
-
+std::string recoverMessage(std::vector<unsigned char> first_block, std::vector<unsigned char> encrypted) {
+	std::cout << "recoverMessage() \n";
 	std::vector<unsigned char> result;
-	unsigned int a = toInt('a');
 	// Find key
-	//std::vector<unsigned char> key;
-	/*bool notDone = true;
-	int tmpCounter = 0;
-	unsigned char IV;
-	unsigned char key;
-	unsigned char C1;
-	while (notDone) {
-		IV = (unsigned char)tmpCounter;
-		key = encrypted[0] ^ (first_block[0] ^ IV);
-		C1 = key ^ (first_block[0] ^ IV);
-		if (C1 == encrypted[0])
-			notDone = false;
-		tmpCounter++;
+	std::vector<unsigned char> key;
+	std::vector<unsigned char> c1;
+	for (int i = 12; i < 24; i++)
+		c1.push_back(encrypted[i]);
+	std::cout << "C1 stored \n";
+	key = xor12(first_block, encrypted);
+	key = xor12(key, c1);
+	std::cout << "Key found \n";
+	int nbrOfBlocks = encrypted.size()/12;
+	std::vector<unsigned char> prevC = encrypted;
+	std::vector<unsigned char> currentC;
+	std::cout << "Big loop start \n";
+	for (int i = 1; i < nbrOfBlocks; i++) {
+		// Compute the current C
+		for (int j = 0; j < 12; j++) 
+			currentC[j] = encrypted[i * 12 + j];
+		std::cout << "Currenct c computed \n";
+		std::vector<unsigned char> M = xor12(prevC, currentC);
+		M = xor12(M, key);
+		std::cout << "M done \n";
+		// Add plain text
+		for (int k = 0; k < 12; k++)
+			result.push_back(M[k]);
+		// Update prevC
+		std::cout << "Message stored \n";
+		prevC = currentC;
+		std::cout << "Old c overrided \n";
 	}
-	std::cout << C1 << std:: endl;
-	//for (int i = 0; i < encrypted.size(); i++) {
-	//unsignedchar a = 'h';
-	//	result.push_back(a);
-	//}
-	result.push_back(key);
-	result.push_back(C1);
-	*/
-	std::cout << a << std::endl;
-	result.push_back('s');
+
   // Work on the arrays (vectors) of bytes (unsigned chars).
   // In the end, construct a string as follows:
   std::string result_str(result.begin(), result.end());
@@ -79,8 +82,11 @@ int main() {
   return 0;
 }
 
-std::vector<unsigned char> xor12(std::vector<unsigned char> *a, std::vector<unsigned char> *b) {
+std::vector<unsigned char> xor12(std::vector<unsigned char> a, std::vector<unsigned char> b) {
 	std::vector<unsigned char> c;
-	c.push_back('h');
+	for (int i = 0; i < 12; i++) {
+		unsigned char tmp = a[i] ^ b[i];
+		c.push_back(tmp);
+	}
 	return c;
 }
